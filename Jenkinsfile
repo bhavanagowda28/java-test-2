@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven'
+    }
+
     environment {
         DOCKER_IMAGE = "spring-boot-demo:${env.BUILD_NUMBER}"
     }
