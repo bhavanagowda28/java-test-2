@@ -6,6 +6,7 @@ pipeline {
     }
 
     environment {
+        PATH = "/usr/local/bin:$PATH"
         DOCKER_IMAGE = "spring-boot-demo:${env.BUILD_NUMBER}"
     }
 
