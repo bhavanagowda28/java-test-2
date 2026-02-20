@@ -1,49 +1,24 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven'
-    }
-
-    environment {
-        PATH = "/usr/local/bin:$PATH"
-        DOCKER_IMAGE = "spring-boot-demo:${env.BUILD_NUMBER}"
-    }
-
     stages {
-        stage('Checkout') {
+
+        stage('Clone Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/bhavanagowda28/java-test-2.git'
+                git 'https://github.com/bhavanagowda28/java-test-2.git'
             }
         }
 
-        stage('Build with Maven') {
+        stage('Compile') {
             steps {
-                sh 'mvn clean package'
+                sh 'javac App.java'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Run App') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE} ."
+                sh 'java App'
             }
-        }
-
-        stage('Run Docker Container') {
-            steps {
-                sh "docker stop demo || true"
-                sh "docker rm demo || true"
-                sh "docker run -d --name demo -p 8080:8080 ${DOCKER_IMAGE}"
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Deployment Successful! Access http://<your-server-ip>:8080/hello'
-        }
-        failure {
-            echo 'Deployment Failed!'
         }
     }
 }
