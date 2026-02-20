@@ -5,7 +5,8 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/bhavanagowda28/java-test-2.git'
+                git branch: 'main',
+                    url: 'https://github.com/bhavanagowda28/java-test-2.git'
             }
         }
 
@@ -22,4 +23,3 @@ pipeline {
         }
     }
 }
-
