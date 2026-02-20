@@ -10,15 +10,15 @@ pipeline {
             }
         }
 
-        stage('Compile') {
+        stage('Build') {
             steps {
-                sh 'javac App.java'
+                sh 'mvn clean package'
             }
         }
 
         stage('Run App') {
             steps {
-                sh 'java App'
+                sh 'java -jar target/*.jar'
             }
         }
     }
